@@ -1,25 +1,47 @@
-import logo from './logo.svg';
+import React, {Component} from "react";
 import './App.css';
+import { Container } from './Container';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      page: 1
+    }
+  }
+
+  goToPrev = () => {
+    if (this.state.page > 1) {
+        this.setState((state)=> ({page: state.page - 1}))
+    }
+  }
+
+  goToNext = () => {
+      if (this.state.page < 42) {
+          this.setState((state)=> ({page: state.page + 1}))
+      }
+  }
+
+  render() {
+    const {page} = this.state;
+    return (
+      <div className="App">
+        <main>
+          <h1>Rick and Morty Characters</h1>
+          <Container page={page}/>
+          <nav>
+            {(page > 1)
+              ? <button onClick={this.goToPrev}>Prev</button>
+              : null}
+            <p>{page}</p>
+            {(page < 42) 
+              ? <button onClick={this.goToNext}>Next</button>
+              : null}
+          </nav>
+        </main>
+      </div>
+    );
+  }
 }
 
 export default App;
